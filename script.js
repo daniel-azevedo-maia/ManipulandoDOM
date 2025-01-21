@@ -1,36 +1,55 @@
-/* ------------ BOTÕES  ------------ */
+/* ------------ BOTÕES ------------ */
 
+// Função para gerar uma cor aleatória em formato hexadecimal
 const escolherCorAleatoria = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
 
-const btnFundo = document.querySelector('#btnFundo').addEventListener('click', () => {
-    document.querySelector('#pagina').style.backgroundColor = escolherCorAleatoria();
-});
-
+// Array com as fontes disponíveis
 const fontes = [
     'Arial', 'Arial Black', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana',
     'Georgia', 'Comic Sans MS', 'Impact', 'Lucida Console', 'Palatino', 'Trebuchet MS', 'Garamond', 'Tahoma'
 ];
 
+// Função para selecionar uma fonte aleatória do array
 const fonteAleatoria = () => fontes[Math.floor(Math.random() * fontes.length)];
 
-const btnTitulo = document.querySelector('#btnTitulo').addEventListener('click', () => {
-    document.querySelector('#titulo').style.fontFamily = fonteAleatoria();
+// Função para alterar o estilo de um elemento
+const alterarEstilo = (seletor, estilo, valor) => {
+    const elemento = document.querySelector(seletor);
+    if (elemento) elemento.style[estilo] = valor;
+};
+
+// Função para alterar o conteúdo de texto de um elemento
+const alterarTexto = (seletor, valor) => {
+    const elemento = document.querySelector(seletor);
+    if (elemento) elemento.innerHTML = valor;
+};
+
+// Botão para alterar a cor de fundo da página
+document.querySelector('#btnFundo').addEventListener('click', () => {
+    alterarEstilo('#pagina', 'backgroundColor', escolherCorAleatoria());
 });
 
-const btnSubtitulo = document.querySelector('#btnSubtitulo').addEventListener('click', () => {
-    document.querySelector('#subtitulo').style.fontFamily = fonteAleatoria();
+// Botões para alterar fontes dos elementos
+document.querySelector('#btnTitulo').addEventListener('click', () => {
+    alterarEstilo('#titulo', 'fontFamily', fonteAleatoria());
 });
 
-const btnTexto = document.querySelector('#btnTexto').addEventListener('click', () => {
-    document.querySelector('#texto').style.fontFamily = fonteAleatoria();
+document.querySelector('#btnSubtitulo').addEventListener('click', () => {
+    alterarEstilo('#subtitulo', 'fontFamily', fonteAleatoria());
 });
 
-const restaurar = document.querySelector('#restaurar').addEventListener('click', () => {
-    location.reload();
+document.querySelector('#btnTexto').addEventListener('click', () => {
+    alterarEstilo('#texto', 'fontFamily', fonteAleatoria());
 });
 
-const btnSalvar = document.querySelector('#btnSalvar').addEventListener('click', () => {
-    document.querySelector('#titulo').innerHTML = document.querySelector('#inputTitulo').value;
-    document.querySelector('#subtitulo').innerHTML = document.querySelector('#inputSubtitulo').value;
-    document.querySelector('#texto').innerHTML = document.querySelector('#inputTexto').value;
+// Botão para restaurar a página
+document.querySelector('#restaurar').addEventListener('click', () => {
+    location.reload(); // Simplesmente recarrega a página
+});
+
+// Botão para salvar novos valores nos elementos
+document.querySelector('#btnSalvar').addEventListener('click', () => {
+    alterarTexto('#titulo', document.querySelector('#inputTitulo').value || 'Título Padrão');
+    alterarTexto('#subtitulo', document.querySelector('#inputSubtitulo').value || 'Subtítulo Padrão');
+    alterarTexto('#texto', document.querySelector('#inputTexto').value || 'Texto Padrão');
 });
